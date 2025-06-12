@@ -15,13 +15,8 @@ import {
   type WebSocketConnectionData,
 } from '@mswjs/interceptors/WebSocket'
 
-// Define a generic connection type that works with both MSW v1 and v2
-interface GenericWebSocketConnection {
-  client: any // Accept any client type
-  server: any // Accept any server type
-  info: any
-  [key: string]: any
-}
+// Import the WebSocketHandlerConnection type from msw-v2.d.ts
+import type { WebSocketHandlerConnection } from 'msw'
 
 const encoder = new Encoder()
 const decoder = new Decoder()
@@ -173,6 +168,9 @@ class SocketIoDuplexConnection {
  *   })
  * })
  */
-export function toSocketIo(connection: WebSocketConnectionData | GenericWebSocketConnection) {
-  return new SocketIoDuplexConnection(connection.client, connection.server)
+export function toSocketIo(connection: WebSocketConnectionData | WebSocketHandlerConnection) {
+  return new SocketIoDuplexConnection(
+    connection.client as WebSocketClientConnection,
+    connection.server as WebSocketServerConnection
+  )
 }
