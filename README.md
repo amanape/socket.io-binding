@@ -46,6 +46,10 @@ npm install @mswjs/socket.io-binding
 
 ### Using with Mock Service Worker
 
+This package is compatible with both MSW v1 and v2.
+
+#### MSW v1
+
 ```js
 import { ws } from 'msw'
 import { toSocketIo } from '@mswjs/socket.io-binding'
@@ -58,6 +62,25 @@ export const handlers = [
 
     io.on('hello', (event, name) => {
       console.log('client sent hello:', name)
+    })
+  }),
+]
+```
+
+#### MSW v2
+
+```js
+import { ws } from 'msw'
+import { toSocketIo } from '@mswjs/socket.io-binding'
+
+const chat = ws.link('wss://chat.example.com')
+
+export const handlers = [
+  chat.addEventListener('connection', (connection) => {
+    const io = toSocketIo(connection)
+    
+    io.client.on('hello', (username) => {
+      io.client.emit('message', `hello, ${username}!`)
     })
   }),
 ]

@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@mswjs/socket.io-binding",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Binding to mock Socket.IO connections with Mock Service Worker",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
@@ -29,7 +29,8 @@
   "author": "Artem Zakharchenko <kettanaito@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "@mswjs/interceptors": "*"
+    "@mswjs/interceptors": "*",
+    "msw": "*"
   },
   "dependencies": {
     "@mswjs/interceptors": "^0.37.1",
@@ -43,6 +44,7 @@
     "@ossjs/release": "^0.8.1",
     "@types/node": "^20.11.16",
     "happy-dom": "^15.11.6",
+    "msw": "^2.0.0",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1",
     "tsup": "^8.3.5",
