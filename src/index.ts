@@ -15,6 +15,23 @@ import {
   type WebSocketConnectionData,
 } from '@mswjs/interceptors/WebSocket'
 
+// Define the minimal interface required by toSocketIo
+interface WebSocketConnectionLike {
+  client: {
+    addEventListener: WebSocketClientConnection['addEventListener']
+    send: WebSocketClientConnection['send']
+    // socket property is accessed in SocketIoDuplexConnection
+    socket?: WebSocketClientConnection['socket']
+  }
+  server: {
+    addEventListener: WebSocketServerConnection['addEventListener']
+    send: WebSocketServerConnection['send']
+    // socket property is accessed in SocketIoDuplexConnection
+    socket?: WebSocketServerConnection['socket']
+  }
+}
+
+
 const encoder = new Encoder()
 const decoder = new Decoder()
 
@@ -165,6 +182,13 @@ class SocketIoDuplexConnection {
  *   })
  * })
  */
-export function toSocketIo(connection: WebSocketConnectionData) {
-  return new SocketIoDuplexConnection(connection.client, connection.server)
+/**
+ * Creates a Socket.IO connection wrapper from a WebSocket connection.
+ * This function works with both MSW v1 and v2 connection objects.
+ */
+export function toSocketIo(connection: WebSocketConnectionData | WebSocketConnectionLike) {
+  return new SocketIoDuplexConnection(
+    connection.client as WebSocketClientConnection,
+    connection.server as WebSocketServerConnection
+  )
 }
