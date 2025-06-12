@@ -172,21 +172,6 @@ class SocketIoDuplexConnection {
  *     client.emit('greetings', `Hello, ${firstName}!`)
  *   })
  * })
- * 
- * // Works with MSW v2 as well
- * import { ws } from 'msw'
- * 
- * const chat = ws.link('wss://chat.example.com')
- * 
- * export const handlers = [
- *   chat.addEventListener('connection', (connection) => {
- *     const io = toSocketIo(connection)
- *     
- *     io.client.on('hello', (username) => {
- *       io.client.emit('message', `hello, ${username}!`)
- *     })
- *   }),
- * ]
  */
 export function toSocketIo(connection: WebSocketConnectionData | GenericWebSocketConnection) {
   return new SocketIoDuplexConnection(connection.client, connection.server)
