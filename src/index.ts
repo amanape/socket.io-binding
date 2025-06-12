@@ -17,8 +17,8 @@ import {
 
 // Define a generic connection type that works with both MSW v1 and v2
 interface GenericWebSocketConnection {
-  client: WebSocketClientConnection
-  server: WebSocketServerConnection
+  client: any // Accept any client type
+  server: any // Accept any server type
   info: any
   [key: string]: any
 }
